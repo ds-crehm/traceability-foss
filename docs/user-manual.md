@@ -99,6 +99,8 @@ In the BPN-EDC configuration screen an admin user can add URLs for BPNs. Existin
 Any configured BPNs will have their URLs merged in addition to the URLs found by the DiscoveryService.
 The resulting list of URLs will be used whenever a notification is sent to those BPNs. In case a URL returns an error response, the remaining URLs will be used as backup.
 
+![user-manual_000](https://ds-crehm.github.io/traceability-foss/docs/assets/user-manual/user-manual_000.png)
+
 | ID | Description |
 | --- | --- |
 | 01 | Any URLs configured for the selected BPN in the BPN-EDC configuration are requested. |
@@ -457,9 +459,9 @@ The "more" menu is opened by clicking on the horizontally aligned three dots ico
 #### Quality notification create/edit view
 
 A quality notification can be started by the following options:
-- Part detail view if a part has child elements an quality notification with type INVESTIGATION can be created.
-- Part table if parts are selected an quality notification with type ALERT can be created.
-- Other parts table if parts are selected an quality notification with type INVESTIGATION can be created.
+- Part detail view if a part has child elements a quality notification with type INVESTIGATION can be created.
+- Part table if parts are selected a quality notification with type ALERT can be created.
+- Other parts table if parts are selected a quality notification with type INVESTIGATION can be created.
 
 A quality notification can be edited by clicking on the context menu on an item within the inbox.
 
@@ -467,7 +469,7 @@ A quality notification can be edited by clicking on the context menu on an item 
 
 #### Quality notifications context action
 
-Select the three dots icon on the right side of an quality notification entry to open the context menu.
+Select the three dots icon on the right side of a quality notification entry to open the context menu.
 From there it is possible to open the quality notification detailed view or change the status of it.
 Only the possible status transition will show up.
 
