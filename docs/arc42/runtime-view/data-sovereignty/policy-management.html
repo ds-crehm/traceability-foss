@@ -505,7 +505,7 @@ For additional information refer to the <a href="https://eclipse-tractusx.github
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="data-sovereignty-publish-assets.svg" alt="data sovereignty publish assets" width="3310" height="1861">
+<img src="data-sovereignty-publish-assets.svg" alt="data sovereignty publish assets" width="2420" height="1712">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -515,60 +515,36 @@ For additional information refer to the <a href="https://eclipse-tractusx.github
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Policies can be created by User with role 'Admin' at any time in the administration section of Trace-X. The policy is created to later used for publishing assets in the current company context.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1,2,3,4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policies can be created by user with role 'Admin' at any time in the administration section of Trace-X. The policy is created to later used for publishing parts in the current company context. Policies are stored in the PolicyStore which is a shared component used by Trace-X [A] and Item Relationship Service (IRS) for storing usage and access policies.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Policies are stored in the PolicyStore which is a shared component used by Trace-X [A] and Item Relationship Service (IRS) for storing usage and access policies.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The policy is created in the policy store.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' receives feedback that the creation of policy was successful.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5, 6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5,6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' imports assets in the administration section of Trace-X [A]. Parts can be imported at any time in the parts section of Trace-X. They will be stored locally at first. <a href="https://github.com/eclipse-tractusx/traceability-foss/tree/main/tx-backend/testdata">Testdata for asset import</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' selects assets in transient state in application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7,8,9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' selects parts in transient state in application and publishes them. The user must choose the policy that is used for the contract negotiation of the selected parts.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' is requested to define a policy for assets publishing.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' selects policy under which assets are published. The user must choose the policy that is used for the contract negotiation of the selected parts.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10, 11</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Assets are created in the EDC. (POST /v3/assets)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10,11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The parts are created in the EDC. (POST /v3/assets)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12,13</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Trace-X [A] BE checks if a PolicyDefinition for the selected policy already exists.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In case the PolicyDefinition does not exist yet, a new PolicyDefinition is created in the EDC [A].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14,15</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">In case PolicyDefinition does not exist, a new PolicyDefinition is created in the EDC [A].</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A contractDefinition is created using the provided policyDefinition.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">16,17</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The created part is linked in the PolicyDefinition from the EDC. This is the last step of data provisioning. Trace-X [A] has done everything to ensure that companies that have a matching policy can access its published parts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each part is created as a Asset Administration Shell Descriptor in the Digital Twin Registry (DTR). This holds all the data of the part including the globalAssetId.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">18,19</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each part is created as a shell in the Digital Twin Registry (DTR). This holds all the data of the part. Before connected BPNs can access the imported parts, the parts must be published to the EDC and to the DTR.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20,21</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User with role 'Admin' in Trace-X [B] creates policy for consuming assets of Trace-X [A].</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18,19,20,21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policies can be created by user with role 'Admin' at any time in the administration section of Trace-X. When synchronizing parts, the respective policies for connected BPNLs will be used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
@@ -576,19 +552,19 @@ For additional information refer to the <a href="https://eclipse-tractusx.github
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23,24</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Trace-X [B] requests for globalAssetIds (unique identifier of digital twins (Asset Administration Shell)) in the DTR.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace-X [B] requests all Asset Administration Shell Descriptors in the DTR of Trace-X [A].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For part synchronization a job is started in the IRS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The globalAssetIds are extracted from the Shell Descriptors.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">26,27</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IRS requests the CatalogOffer for globalAssetsIds passed by Trace-X [A].</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For part synchronization a job is started in the IRS using the globalAssetIds from the previous step.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">28</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IRS extracts the policies from the CatalogOffer.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27,28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRS requests the catalogOffer for all globalAssetsIds.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">29,30</p></td>
@@ -596,23 +572,23 @@ For additional information refer to the <a href="https://eclipse-tractusx.github
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Now that the IRS has all the relevant policies of both companies, it can start comparing the linked policy of each part to the policy list of Trace-X [B]. This works by comparing the included constraints logically. If no policy matches for a part, it will not be imported.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Now that the IRS has all the relevant policies of both companies, it can start comparing the linked policy in the catalogOffer of each part to the policy list of Trace-X [B]. This works by comparing the included constraints logically.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32,33,34</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the policy of the part matches with any policy of Trace-X [A], a contract agreement is created for both Trace-X [A] and Trace-X [B]. It can be viewed in the administration section of Trace-X and documents the data exchange. Since the contractAgreementId will be mapped to a submodel of IRS, the contracts can be seen after IRS responded to Trace-X' initial sync call with the submodels including the contractAgreementId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32,33,34,35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the policy of the part matches with any policy of Trace-X [A], a contract agreement is created for both Trace-X [A] and Trace-X [B]. It can be viewed in the administration section of Trace-X and documents the data exchange.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Now that the contract negotiation was successful, the data consumption process can take place for that part.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ref import part data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Now that the contract negotiation was successful, the part data can be imported. This process is documented in the data consumption section.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">36</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">In case the policy does not match, IRS creates a tombstone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">36,37</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In case the policy does not match, IRS creates a tombstone and sends a job response to Trace-X [B].</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">37</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IRS responds to the Trace-X [B] instance after completing job processing. The contractAgreementId for the asset is available in Trace-X from the IRS JobResponse.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">38</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRS responds to the Trace-X [B] instance after completing job processing. The contractAgreementId for the asset is available in the job response.</p></td>
 </tr>
 </tbody>
 </table>
@@ -831,7 +807,7 @@ For more detailed information concerning the functionality of IRS please refer t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-29 10:46:02 UTC
+Last updated 2024-07-29 11:51:27 UTC
 </div>
 </div>
 </body>
