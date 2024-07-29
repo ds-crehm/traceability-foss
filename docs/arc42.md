@@ -443,19 +443,20 @@ After deploying Trace-X, no policies are defined for any BPNs yet. Instead, Trac
 However, to be sure that data is shared only with companies that match one’s requirements, an administrator must set up policies before sending and receiving data.
 
 The policies used for sending and receiving notifications and parts have an identical data format, so they can be used for each process interchangeably.
-The processes itself are different and will be explained here:
+The processes itself are different and will be explained in this section.
 
 ### Policy Types
 
-The EDC Connector MUST provide a possibility to restrict the access of a Data Asset to specific business partners by attribute(s), e.g., represented as a VC.
-The Connector MUST restrict the data usage to partners and purposes for a specific use case.
+The EDC connector MUST provide a possibility to restrict the access of a data asset to specific business partners by attribute(s), e.g. represented as a VC.
+The connector MUST restrict the data usage to partners and purposes for a specific use case.
 
 There are two policy types used.
+
 * Access
 * Usage
 
-As specified by the [Dataspace Protocol](https://github.com/International-Data-Spaces-Association/ids-specification), one Data Asset MUST refer to at least one Usage Policy, expressed in ODRL.
-For additional information refer to [Connector KIT](https://eclipse-tractusx.github.io/docs-kits/kits/Connector%20Kit/Adoption%20View/connector_kit_adoption_view)
+As specified by the [Dataspace Protocol](https://github.com/International-Data-Spaces-Association/ids-specification) one data asset MUST refer to at least one usage policy, expressed in ODRL.
+For additional information refer to the [Connector KIT](https://eclipse-tractusx.github.io/docs-kits/kits/Connector%20Kit/Adoption%20View/connector_kit_adoption_view)
 
 ### Policies for sending and receiving parts
 
@@ -464,35 +465,35 @@ For additional information refer to [Connector KIT](https://eclipse-tractusx.git
 |     |     |
 | --- | --- |
 | 1 | Policies can be created by User with role 'Admin' at any time in the administration section of Trace-X. The policy is created to later used for publishing assets in the current company context. |
-| 2 | Policies are stored in the PolicyStore which is a shared component used by Trace-X [A] app and IRS for storing usage and access policies. |
-| 3 | Policy is created in the policy store. |
-| 4 | User with role 'Admin' receives feedback that creation of policy was successful. |
-| 5, 6 | User with role 'Admin' imports assets in Admin section of Trace-X [A]. Parts can be imported at any time in the parts section of Trace-X. They will be stored locally at first. [Testdata for asset import](https://github.com/eclipse-tractusx/traceability-foss/tree/main/tx-backend/testdata) |
+| 2 | Policies are stored in the PolicyStore which is a shared component used by Trace-X [A] and Item Relationship Service (IRS) for storing usage and access policies. |
+| 3 | The policy is created in the policy store. |
+| 4 | User with role 'Admin' receives feedback that the creation of policy was successful. |
+| 5, 6 | User with role 'Admin' imports assets in the administration section of Trace-X [A]. Parts can be imported at any time in the parts section of Trace-X. They will be stored locally at first. [Testdata for asset import](https://github.com/eclipse-tractusx/traceability-foss/tree/main/tx-backend/testdata) |
 | 7 | User with role 'Admin' selects assets in transient state in application. |
 | 8 | User with role 'Admin' is requested to define a policy for assets publishing. |
-| 9 | User with role 'Admin' selects policy under which assets are published. The user must choose the policy that is used for contract negotiation of the selected parts. |
+| 9 | User with role 'Admin' selects policy under which assets are published. The user must choose the policy that is used for the contract negotiation of the selected parts. |
 | 10, 11 | Assets are created in the EDC. (POST /v3/assets) |
-| 12,13 | Trace-X [A] BE checks if PolicyDefinition for selected policy already exists. |
-| 14,15 | In case PolicyDefinition does not exist. New PolicyDefinition is created in EDC [A]. The PolicyDefinition is created in the EDC. |
+| 12,13 | Trace-X [A] BE checks if a PolicyDefinition for the selected policy already exists. |
+| 14,15 | In case PolicyDefinition does not exist, a new PolicyDefinition is created in the EDC [A]. |
 | 16,17 | The created part is linked in the PolicyDefinition from the EDC. This is the last step of data provisioning. Trace-X [A] has done everything to ensure that companies that have a matching policy can access its published parts. |
-| 18,19 | Each part is created as a shell in the DTR. This holds all the data of the part. Before connected BPNs can access the imported parts, the parts must be published to the EDC and to the Digital Twin Registry (DTR). |
+| 18,19 | Each part is created as a shell in the Digital Twin Registry (DTR). This holds all the data of the part. Before connected BPNs can access the imported parts, the parts must be published to the EDC and to the DTR. |
 | 20,21 | User with role 'Admin' in Trace-X [B] creates policy for consuming assets of Trace-X [A]. |
 | 22 | Trace-X [B] wants to synchronize parts and retrieve available ones from connected BPNs. In this case Trace-X [A] and Trace-X [B] have an established connection. |
-| 23,24 | Trace-X [B] requests for globalAssetIds (unique identifier of digital twins (Asset Administration Shell)) in decentral Digital Twin registry. |
-| 25 | For part synchronization a synchronization job is started in the Item Relationship Service (IRS) . |
-| 26,27 | IRS requests for CatalogOffer for globalAssetsIds passed by Trace-X [A] |
-| 28 | IRS extracts policies from CatalogOffer |
-| 29,30 | IRS requests for policies defined for BPNL of Trace-X [A] in PolicyStore of Trace-X [B] |
-| 31 | Now that the IRS has all the relevant policies of both companies, it can start comparing the linked policy of each part to the policy list of Trace-X B. This works by comparing the included constraints logically. If no policy matches for a part, it will not be imported. |
-| 32,33,34 | If the policy of the part matches with any policy of Trace-X A, a contract agreement is created for both Trace-X A and Trace-X B. It can be viewed in the administration section of Trace-X and documents the data exchange. Since the contractAgreementId will be mapped to an submodel of IRS. The contracts can be seen after IRS responded to Trace-X initial sync call with the submodels including the contractAgreementId. |
+| 23,24 | Trace-X [B] requests for globalAssetIds (unique identifier of digital twins (Asset Administration Shell)) in the DTR. |
+| 25 | For part synchronization a job is started in the IRS. |
+| 26,27 | IRS requests the CatalogOffer for globalAssetsIds passed by Trace-X [A]. |
+| 28 | IRS extracts the policies from the CatalogOffer. |
+| 29,30 | IRS requests policies defined for the BPNL of Trace-X [A] in the PolicyStore of Trace-X [B]. |
+| 31 | Now that the IRS has all the relevant policies of both companies, it can start comparing the linked policy of each part to the policy list of Trace-X [B]. This works by comparing the included constraints logically. If no policy matches for a part, it will not be imported. |
+| 32,33,34 | If the policy of the part matches with any policy of Trace-X [A], a contract agreement is created for both Trace-X [A] and Trace-X [B]. It can be viewed in the administration section of Trace-X and documents the data exchange. Since the contractAgreementId will be mapped to a submodel of IRS, the contracts can be seen after IRS responded to Trace-X' initial sync call with the submodels including the contractAgreementId. |
 | 35 | Now that the contract negotiation was successful, the data consumption process can take place for that part. |
-| 36 | In case policy does not match IRS created tombstone. |
-| 37 | IRS callbacks Trace-X [B] Instance after completing job processing. ContractAgreementId for asset is available in Trace-X passed in IRS JobResponse. |
+| 36 | In case the policy does not match, IRS creates a tombstone. |
+| 37 | IRS responds to the Trace-X [B] instance after completing job processing. The contractAgreementId for the asset is available in Trace-X from the IRS JobResponse. |
 
-It’s possible to publish parts with different policies. For this, the user must only publish a limited selection of parts for which he can select a policy. For the parts that must be published with different policies, the user can repeat the process.
+It’s possible to publish parts with different policies. For this, the user must only publish a limited selection of parts for which he can select a policy. For parts that must be published with different policies, the user can repeat the process.
 
 ***Note***:
-For more detailed information concerning the functionality of IRS please refer to [IRS documentation](https://eclipse-tractusx.github.io/item-relationship-service/docs/)
+For more detailed information concerning the functionality of IRS please refer to the [IRS documentation](https://eclipse-tractusx.github.io/item-relationship-service/docs/)
 
 ***[Work-in-progress]*** The user may also choose parts that have already been published - they can be republished with a different policy. The process for this is identical to the regular publishing process.
 
@@ -504,7 +505,7 @@ For more detailed information concerning the functionality of IRS please refer t
 | --- | --- |
 | 1 | Policies can be created by administrators at any time in the administration section of Trace-X. In order for policies to be used for notifications the administrator must pay attention to the BPN selection of the policies, as Trace-X will choose notification policies based on that. |
 | 2 | The user sends a notification to a connected BPN. |
-| 3 | First Trace-X checks the configured policies for any valid (not expired) policies that have the BPN of the receiver in their BPN selection. ***There can only be one valid policy for each BPN.*** |
+| 3 | First, Trace-X checks the configured policies for any valid (not expired) policies that have the BPN of the receiver in their BPN selection. ***There can only be one valid policy for each BPN.*** |
 | 4 | Trace-X takes the appropriate policyDefinition. |
 | 5 | Trace-X requests the catalog of the receiver BPN from their EDC. The catalog contains all policies of the BPN including the policies they use for sending and receiving policies. |
 | 6 | The receiver EDC returns the catalog. |
@@ -514,7 +515,7 @@ For more detailed information concerning the functionality of IRS please refer t
 | 11 | Finally, the notification will be sent to the receiving EDC. |
 | 12 | If no policies match, an error will be returned to the user. |
 
-#### No policies defined for Receiver BPNL when sending notifications
+#### No policies defined for receiver when sending notifications
 
 ![arc42_017](https://ds-crehm.github.io/traceability-foss/docs/assets/arc42/arc42_017.png)
 
@@ -524,7 +525,7 @@ If no policies are configured for the receiving BPN and a notification is sent t
 
 ![arc42_018](https://ds-crehm.github.io/traceability-foss/docs/assets/arc42/arc42_018.png)
 
-Policies always have an expiration time defined by the 'validUntil' timestamp. When a notification is sent and there are policies configured for the selected BPN with an expiration time in the past, Trace-X will throw an error. In that case, an administrator must either update the policy. Then the policy can be resent.
+Policies always have an expiration time defined by the 'validUntil' timestamp. When a notification is sent and there are policies configured for the selected BPN with an expiration time in the past, Trace-X will throw an error. In that case, an administrator must update or recreate the policy. Then the policy can be resent.
 
 #### Testing policies
 
@@ -533,6 +534,62 @@ In order to test the functionality of policies, an administrator can create a po
 To fix it, the administrator either has to replace the policy with a valid policy or the connected BPN can create an identical policy with the same test constraints. Sending the notification will work after this was done.
 
 The same applies for sending and receiving parts only then the user must choose the created test policy manually.
+
+An example testing process will be described here with two companies Trace-X A and Trace-X B:
+
+##### Step 1
+
+In the initial state of Trace-X, only the default policy exists:
+
+![step-1](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-1.png)
+
+The catalog offer contains the policy definition of the default policy:
+
+![step-1-1](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-1-1.png)
+
+In this state both companies can send notifications to each other.
+
+##### Step 2
+
+In this example Trace-X B creates a new policy:
+
+![step-2](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-2.png)
+
+![step-2-1](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-2-1.png)
+
+Once created, the catalog offer will be updated using this policy:
+
+![step-2-2](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-2-2.png)
+
+##### Step 3
+
+Since the catalog offer of Trace-X B was updated, Trace-X A won’t be able to send notifications to Trace-X B anymore:
+
+![step-3](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-3.png)
+
+Trace-X A will take its own default policy and compare it to the catalog offer provided by Trace-X B, which will result in a mismatch.
+
+##### Step 4
+
+Since Trace-X B has no policy defined for Trace-X A’s BPN, it will compare its own default policy with the catalog offer provided Trace-X A which is identical to the default policy. So Trace-X B can still send notifications to Trace-X A:
+
+![step-4](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-4.png)
+
+##### Step 5
+
+Now Trace-X A can create a new policy using the same constraints as Trace-X B’s policy:
+
+![step-5](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-5.png)
+
+![step-5-1](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-5-1.png)
+
+This policy will now be used when sending notifications to Trace-X B. Trace-X A’s catalog offer is unchanged.
+
+##### Step 6
+
+Trace-X A can now send notifications to Trace-X B again, since the policy matches with the provided catalog offer:
+
+![step-6](https://raw.githubusercontent.com/eclipse-tractusx/traceability-foss/main/docs/src/images/arc42/runtime-view/data-sovereignty/step-6.png)
 
 ## Policies
 
